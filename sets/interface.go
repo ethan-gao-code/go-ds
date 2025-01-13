@@ -17,5 +17,6 @@ type Set interface {
 	Union(other *Sets) *Sets        // Return a new set containing all elements from both sets.
 	Difference(other *Sets) *Sets   // Return a new set containing elements in the current set but not in the other set.
 	Subset(other *Sets) bool        // Check if the current set is a subset of the other set.
-	String() string                 // Return a string representation of the set.
+
+	String() string // Return a string representation of the set.
 }
