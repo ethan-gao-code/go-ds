@@ -3,7 +3,7 @@ package sets
 import "github.com/ethan-gao-code/go-ds/collection"
 
 // Ensure Set implements the SetInterface
-var _ collection.SetInterface = (*Sets)(nil)
+var _ collection.Set = (*Sets)(nil)
 
 // New creates a new instance of Set.
 func New() *Sets {
