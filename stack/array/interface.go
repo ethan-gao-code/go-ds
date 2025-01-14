@@ -9,5 +9,5 @@ type Stack interface {
 	Size() int                  // Return the number of elements in the stack.
 	Clear()                     // Remove all elements from the stack.
 	Values() []interface{}      // Return all elements in the stack as a slice.
-	String() string
+	String() string             // Return a string representation of the stack
 }
