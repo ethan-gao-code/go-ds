@@ -9,11 +9,6 @@ import (
 	"strings"
 )
 
-// GenericQueue defines a queue data structure with a generic type
-type GenericQueue[T any] struct {
-	items []T
-}
-
 // NewGenericQueue creates a new instance of a generic queue
 func NewGenericQueue[T any]() *GenericQueue[T] {
 	return &GenericQueue[T]{}

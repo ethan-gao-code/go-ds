@@ -9,11 +9,6 @@ import (
 	"strings"
 )
 
-// Stacks defines a stack data structure without generics.
-type Stacks struct {
-	items []interface{}
-}
-
 // New creates a new instance of a non-generic stack.
 func New() *Stacks {
 	return &Stacks{}

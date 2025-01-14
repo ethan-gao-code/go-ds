@@ -9,11 +9,6 @@ import (
 	"strings"
 )
 
-// GenericStacks defines a stack data structure with a generic type.
-type GenericStacks[T any] struct {
-	items []T
-}
-
 // NewGenericStack creates a new instance of a generic stack.
 func NewGenericStack[T any]() *GenericStacks[T] {
 	return &GenericStacks[T]{}

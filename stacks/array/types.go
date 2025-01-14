@@ -4,12 +4,12 @@
 
 package array
 
-// Queues defines a queue data structure
-type Queues struct {
+// Stacks defines a stack data structure without generics.
+type Stacks struct {
 	items []interface{}
 }
 
-// GenericQueue defines a queue data structure with a generic type
-type GenericQueue[T any] struct {
+// GenericStacks defines a stack data structure with a generic type.
+type GenericStacks[T any] struct {
 	items []T
 }
