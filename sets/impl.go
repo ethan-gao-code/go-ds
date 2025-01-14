@@ -8,7 +8,7 @@ import (
 // Ensure Set implements the SetInterface
 var _ Set = (*Sets)(nil)
 
-// New creates a new instance of Set.
+// New creates a new instance of Set
 func New(values ...interface{}) *Sets {
 	result := &Sets{items: make(map[interface{}]struct{})}
 	if len(values) > 0 {
@@ -17,8 +17,8 @@ func New(values ...interface{}) *Sets {
 	return result
 }
 
-// Add adds one or more elements to the set.
-// It accepts variadic parameters, allowing one or multiple elements to be added.
+// Add adds one or more elements to the set
+// It accepts variadic parameters, allowing one or multiple elements to be added
 func (s *Sets) Add(values ...interface{}) {
 	for _, value := range values {
 		// Adds each element to the set.
@@ -26,13 +26,13 @@ func (s *Sets) Add(values ...interface{}) {
 	}
 }
 
-// AddAll adds a batch of elements to the set.
-// It accepts a slice of elements to be added.
+// AddAll adds a batch of elements to the set
+// It accepts a slice of elements to be added
 func (s *Sets) AddAll(values []interface{}) {
 	s.Add(values...)
 }
 
-// Remove removes one or more elements from the set.
+// Remove removes one or more elements from the set
 // It accepts variadic parameters, allowing one or multiple elements to be removed.
 func (s *Sets) Remove(values ...interface{}) {
 	for _, value := range values {
@@ -41,13 +41,13 @@ func (s *Sets) Remove(values ...interface{}) {
 	}
 }
 
-// RemoveAll removes a batch of elements from the set.
-// It accepts a slice of elements to be removed.
+// RemoveAll removes a batch of elements from the set
+// It accepts a slice of elements to be removed
 func (s *Sets) RemoveAll(values []interface{}) {
 	s.Remove(values...)
 }
 
-// Contains checks if all the given elements are present in the set.
+// Contains checks if all the given elements are present in the set
 func (s *Sets) Contains(values ...interface{}) bool {
 	for _, value := range values {
 		if _, exists := s.items[value]; !exists {
@@ -57,17 +57,17 @@ func (s *Sets) Contains(values ...interface{}) bool {
 	return true
 }
 
-// ContainsAll checks if the set contains all the elements in the provided slice.
+// ContainsAll checks if the set contains all the elements in the provided slice
 func (s *Sets) ContainsAll(items []interface{}) bool {
 	return s.Contains(items...)
 }
 
-// Size returns the number of elements in the set.
+// Size returns the number of elements in the set
 func (s *Sets) Size() int {
 	return len(s.items)
 }
 
-// IsEmpty checks if the set is empty.
+// IsEmpty checks if the set is empty
 func (s *Sets) IsEmpty() bool {
 	return len(s.items) == 0
 }
@@ -77,7 +77,7 @@ func (s *Sets) Clear() {
 	s.items = make(map[interface{}]struct{})
 }
 
-// Values returns a slice containing all elements in the set.
+// Values returns a slice containing all elements in the set
 func (s *Sets) Values() []interface{} {
 	values := make([]interface{}, 0, s.Size())
 	for key := range s.items {
@@ -87,7 +87,7 @@ func (s *Sets) Values() []interface{} {
 }
 
 // Intersection returns a new set that contains the elements
-// that are present in both sets.
+// that are present in both sets
 func (s *Sets) Intersection(other *Sets) *Sets {
 	result := New() // Create a new set for the result
 	for item := range s.items {
@@ -99,7 +99,7 @@ func (s *Sets) Intersection(other *Sets) *Sets {
 }
 
 // Union returns a new set that contains all the elements
-// from both sets (union of the sets).
+// from both sets (union of the sets)
 func (s *Sets) Union(other *Sets) *Sets {
 	result := New(s.Values()...)
 	// Add all elements from the other set
@@ -111,7 +111,7 @@ func (s *Sets) Union(other *Sets) *Sets {
 }
 
 // Difference returns a new set that contains elements that are in the current set
-// but not in the other set (the difference of the sets).
+// but not in the other set (the difference of the sets)
 func (s *Sets) Difference(other *Sets) *Sets {
 	result := New() // Create a new set for the result
 
@@ -126,7 +126,7 @@ func (s *Sets) Difference(other *Sets) *Sets {
 	return result
 }
 
-// Subset checks if the current set is a subset of the other set.
+// Subset checks if the current set is a subset of the other set
 func (s *Sets) Subset(other *Sets) bool {
 	// Iterate over the elements of the current set
 	for item := range s.items {
@@ -138,7 +138,7 @@ func (s *Sets) Subset(other *Sets) bool {
 	return true
 }
 
-// String returns a string representation of the set.
+// String returns a string representation of the set
 func (s *Sets) String() string {
 	// Create a slice to hold string representations of the elements
 	var elements []string
