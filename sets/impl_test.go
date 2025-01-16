@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-func TestNew(t *testing.T) {
+func TestSets_New(t *testing.T) {
 	// Test New with no values
 	set1 := New()
 	if set1.Size() != 0 {
@@ -31,150 +31,150 @@ func TestNew(t *testing.T) {
 	}
 }
 
-//func TestAdd(t *testing.T) {
-//	s := New()
-//
-//	// Test adding a single element
-//	s.Add(1)
-//	if _, exists := s.items[1]; !exists {
-//		t.Errorf("Add failed: Set should contain element 1")
-//	}
-//
-//	// Test adding multiple elements
-//	s.Add(2, 3)
-//	if _, exists := s.items[2]; !exists {
-//		t.Errorf("Add failed: Set should contain element 2")
-//	}
-//	if _, exists := s.items[3]; !exists {
-//		t.Errorf("Add failed: Set should contain element 3")
-//	}
-//
-//	// Test that duplicates are not added
-//	s.Add(1) // Adding 1 again should not change the set
-//	if len(s.items) != 3 {
-//		t.Errorf("Add failed: Set should have 3 unique elements, got %d", len(s.items))
-//	}
-//
-//	// Test adding string elements
-//	s.Add("apple", "banana")
-//	if _, exists := s.items["apple"]; !exists {
-//		t.Errorf("Add failed: Set should contain element 'apple'")
-//	}
-//	if _, exists := s.items["banana"]; !exists {
-//		t.Errorf("Add failed: Set should contain element 'banana'")
-//	}
-//
-//	// Test that duplicates are not added
-//	s.Add(1) // Adding 1 again should not change the set
-//	if len(s.items) != 5 {
-//		t.Errorf("Add failed: Set should have 5 unique elements, got %d", len(s.items))
-//	}
-//}
-//
-//func TestAddAll(t *testing.T) {
-//	s := New()
-//
-//	// Test adding a slice of number elements using AddAll
-//	s.AddAll([]interface{}{1, 2, 3})
-//	if _, exists := s.items[1]; !exists {
-//		t.Errorf("AddAll failed: Set should contain element 1")
-//	}
-//	if _, exists := s.items[2]; !exists {
-//		t.Errorf("AddAll failed: Set should contain element 2")
-//	}
-//	if _, exists := s.items[3]; !exists {
-//		t.Errorf("AddAll failed: Set should contain element 3")
-//	}
-//
-//	// Test adding string elements using AddAll
-//	s.AddAll([]interface{}{"apple", "banana", "cherry"})
-//	if _, exists := s.items["apple"]; !exists {
-//		t.Errorf("AddAll failed: Set should contain element 'apple'")
-//	}
-//	if _, exists := s.items["banana"]; !exists {
-//		t.Errorf("AddAll failed: Set should contain element 'banana'")
-//	}
-//	if _, exists := s.items["cherry"]; !exists {
-//		t.Errorf("AddAll failed: Set should contain element 'cherry'")
-//	}
-//
-//	// Test adding elements that already exist
-//	s.AddAll([]interface{}{3, 4})
-//	if len(s.items) != 7 {
-//		t.Errorf("AddAll failed: Set should have 7 unique elements, got %d", len(s.items))
-//	}
-//}
-//
-//func TestRemove(t *testing.T) {
-//	s := New()
-//	s.Add(1, 2, 3, 4)
-//	s.Add("apple", "banana", "cherry")
-//
-//	// Test removing a single number element
-//	s.Remove(1)
-//	if _, exists := s.items[1]; exists {
-//		t.Errorf("Remove failed: Set should not contain element 1")
-//	}
-//
-//	// Test removing a single string element
-//	s.Remove("apple")
-//	if _, exists := s.items["apple"]; exists {
-//		t.Errorf("Remove failed: Set should not contain element 'apple'")
-//	}
-//
-//	// Test removing multiple elements (numbers)
-//	s.Remove(2, 3)
-//	if _, exists := s.items[2]; exists {
-//		t.Errorf("Remove failed: Set should not contain element 2")
-//	}
-//	if _, exists := s.items[3]; exists {
-//		t.Errorf("Remove failed: Set should not contain element 3")
-//	}
-//
-//	// Test removing multiple elements (strings)
-//	s.Remove("banana", "cherry")
-//	if _, exists := s.items["banana"]; exists {
-//		t.Errorf("Remove failed: Set should not contain element 'banana'")
-//	}
-//	if _, exists := s.items["cherry"]; exists {
-//		t.Errorf("Remove failed: Set should not contain element 'cherry'")
-//	}
-//}
-//
-//func TestRemoveAll(t *testing.T) {
-//	s := New()
-//	s.Add(1, 2, 3, 4)
-//	s.Add("apple", "banana", "cherry")
-//
-//	// Test removing multiple number elements using RemoveAll
-//	s.RemoveAll([]interface{}{1, 2})
-//	if _, exists := s.items[1]; exists {
-//		t.Errorf("RemoveAll failed: Set should not contain element 1")
-//	}
-//	if _, exists := s.items[2]; exists {
-//		t.Errorf("RemoveAll failed: Set should not contain element 2")
-//	}
-//	if _, exists := s.items[3]; !exists {
-//		t.Errorf("RemoveAll failed: Set should contain element 3")
-//	}
-//
-//	// Test removing multiple string elements using RemoveAll
-//	s.RemoveAll([]interface{}{"banana", "cherry"})
-//	if _, exists := s.items["banana"]; exists {
-//		t.Errorf("RemoveAll failed: Set should not contain element 'banana'")
-//	}
-//	if _, exists := s.items["cherry"]; exists {
-//		t.Errorf("RemoveAll failed: Set should not contain element 'cherry'")
-//	}
-//
-//	// Test removing elements that don't exist
-//	s.RemoveAll([]interface{}{"grape", "kiwi"}) // These elements are not in the set
-//	if len(s.items) != 3 {
-//		t.Errorf("RemoveAll failed: Set should still contain 3 elements, got %d", len(s.items))
-//	}
-//}
+func TestSets_Add(t *testing.T) {
+	s := New()
 
-func TestContains(t *testing.T) {
+	// Test adding a single element
+	s.Add(1)
+	if _, exists := s.items[1]; !exists {
+		t.Errorf("Add failed: Set should contain element 1")
+	}
+
+	// Test adding multiple elements
+	s.Add(2, 3)
+	if _, exists := s.items[2]; !exists {
+		t.Errorf("Add failed: Set should contain element 2")
+	}
+	if _, exists := s.items[3]; !exists {
+		t.Errorf("Add failed: Set should contain element 3")
+	}
+
+	// Test that duplicates are not added
+	s.Add(1) // Adding 1 again should not change the set
+	if len(s.items) != 3 {
+		t.Errorf("Add failed: Set should have 3 unique elements, got %d", len(s.items))
+	}
+
+	// Test adding string elements
+	s.Add("apple", "banana")
+	if _, exists := s.items["apple"]; !exists {
+		t.Errorf("Add failed: Set should contain element 'apple'")
+	}
+	if _, exists := s.items["banana"]; !exists {
+		t.Errorf("Add failed: Set should contain element 'banana'")
+	}
+
+	// Test that duplicates are not added
+	s.Add(1) // Adding 1 again should not change the set
+	if len(s.items) != 5 {
+		t.Errorf("Add failed: Set should have 5 unique elements, got %d", len(s.items))
+	}
+}
+
+func TestSets_AddAll(t *testing.T) {
+	s := New()
+
+	// Test adding a slice of number elements using AddAll
+	s.AddAll([]interface{}{1, 2, 3})
+	if _, exists := s.items[1]; !exists {
+		t.Errorf("AddAll failed: Set should contain element 1")
+	}
+	if _, exists := s.items[2]; !exists {
+		t.Errorf("AddAll failed: Set should contain element 2")
+	}
+	if _, exists := s.items[3]; !exists {
+		t.Errorf("AddAll failed: Set should contain element 3")
+	}
+
+	// Test adding string elements using AddAll
+	s.AddAll([]interface{}{"apple", "banana", "cherry"})
+	if _, exists := s.items["apple"]; !exists {
+		t.Errorf("AddAll failed: Set should contain element 'apple'")
+	}
+	if _, exists := s.items["banana"]; !exists {
+		t.Errorf("AddAll failed: Set should contain element 'banana'")
+	}
+	if _, exists := s.items["cherry"]; !exists {
+		t.Errorf("AddAll failed: Set should contain element 'cherry'")
+	}
+
+	// Test adding elements that already exist
+	s.AddAll([]interface{}{3, 4})
+	if len(s.items) != 7 {
+		t.Errorf("AddAll failed: Set should have 7 unique elements, got %d", len(s.items))
+	}
+}
+
+func TestSets_Remove(t *testing.T) {
+	s := New()
+	s.Add(1, 2, 3, 4)
+	s.Add("apple", "banana", "cherry")
+
+	// Test removing a single number element
+	s.Remove(1)
+	if _, exists := s.items[1]; exists {
+		t.Errorf("Remove failed: Set should not contain element 1")
+	}
+
+	// Test removing a single string element
+	s.Remove("apple")
+	if _, exists := s.items["apple"]; exists {
+		t.Errorf("Remove failed: Set should not contain element 'apple'")
+	}
+
+	// Test removing multiple elements (numbers)
+	s.Remove(2, 3)
+	if _, exists := s.items[2]; exists {
+		t.Errorf("Remove failed: Set should not contain element 2")
+	}
+	if _, exists := s.items[3]; exists {
+		t.Errorf("Remove failed: Set should not contain element 3")
+	}
+
+	// Test removing multiple elements (strings)
+	s.Remove("banana", "cherry")
+	if _, exists := s.items["banana"]; exists {
+		t.Errorf("Remove failed: Set should not contain element 'banana'")
+	}
+	if _, exists := s.items["cherry"]; exists {
+		t.Errorf("Remove failed: Set should not contain element 'cherry'")
+	}
+}
+
+func TestSets_RemoveAll(t *testing.T) {
+	s := New()
+	s.Add(1, 2, 3, 4)
+	s.Add("apple", "banana", "cherry")
+
+	// Test removing multiple number elements using RemoveAll
+	s.RemoveAll([]interface{}{1, 2})
+	if _, exists := s.items[1]; exists {
+		t.Errorf("RemoveAll failed: Set should not contain element 1")
+	}
+	if _, exists := s.items[2]; exists {
+		t.Errorf("RemoveAll failed: Set should not contain element 2")
+	}
+	if _, exists := s.items[3]; !exists {
+		t.Errorf("RemoveAll failed: Set should contain element 3")
+	}
+
+	// Test removing multiple string elements using RemoveAll
+	s.RemoveAll([]interface{}{"banana", "cherry"})
+	if _, exists := s.items["banana"]; exists {
+		t.Errorf("RemoveAll failed: Set should not contain element 'banana'")
+	}
+	if _, exists := s.items["cherry"]; exists {
+		t.Errorf("RemoveAll failed: Set should not contain element 'cherry'")
+	}
+
+	// Test removing elements that don't exist
+	s.RemoveAll([]interface{}{"grape", "kiwi"}) // These elements are not in the set
+	if len(s.items) != 3 {
+		t.Errorf("RemoveAll failed: Set should still contain 3 elements, got %d", len(s.items))
+	}
+}
+
+func TestSets_Contains(t *testing.T) {
 	s := New()
 	s.Add(1, 2, 3, "apple", "banana")
 
@@ -208,7 +208,7 @@ func TestContains(t *testing.T) {
 	}
 }
 
-func TestContainsAll(t *testing.T) {
+func TestSets_ContainsAll(t *testing.T) {
 	s := New()
 	s.Add(1, 2, 3, "apple", "banana")
 
@@ -228,7 +228,7 @@ func TestContainsAll(t *testing.T) {
 	}
 }
 
-func TestSize(t *testing.T) {
+func TestSets_Size(t *testing.T) {
 	s := New()
 
 	// Test size of an empty set
@@ -267,7 +267,7 @@ func TestSize(t *testing.T) {
 	}
 }
 
-func TestIsEmpty(t *testing.T) {
+func TestSets_IsEmpty(t *testing.T) {
 	s := New()
 
 	// Test empty set
@@ -288,7 +288,7 @@ func TestIsEmpty(t *testing.T) {
 	}
 }
 
-func TestClear(t *testing.T) {
+func TestSets_Clear(t *testing.T) {
 	s := New()
 
 	// Add some elements
@@ -317,7 +317,7 @@ func TestClear(t *testing.T) {
 	}
 }
 
-func TestValues(t *testing.T) {
+func TestSets_Values(t *testing.T) {
 	s := New()
 
 	// Helper function to check if a slice contains a value

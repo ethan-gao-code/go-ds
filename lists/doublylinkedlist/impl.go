@@ -118,6 +118,60 @@ func (l *List) RemoveLast() interface{} {
 	return removedNode.value
 }
 
+// PeekFirst returns the first element of the doubly linked list without removing it.
+func (l *List) PeekFirst() interface{} {
+	if l.head == nil {
+		return nil // Return nil if the list is empty
+	}
+	return l.head.value
+}
+
+// PeekLast returns the last element of the doubly linked list without removing it.
+func (l *List) PeekLast() interface{} {
+	if l.tail == nil {
+		return nil // Return nil if the list is empty
+	}
+	return l.tail.value
+}
+
+// GetByIndex returns the element at the specified index.
+func (l *List) GetByIndex(index int) interface{} {
+	// If the index is out of bounds
+	if index < 0 || index >= l.size {
+		return nil
+	}
+
+	// Start from the head or tail depending on the index location to optimize search
+	if index < l.size/2 {
+		// Traverse from the head
+		current := l.head
+		for i := 0; i < index; i++ {
+			current = current.next
+		}
+		return current.value
+	} else {
+		// Traverse from the tail
+		current := l.tail
+		for i := l.size - 1; i > index; i-- {
+			current = current.prev
+		}
+		return current.value
+	}
+}
+
+// IndexOf returns the index of the first occurrence of the given value.
+// Returns -1 if the value is not found.
+func (l *List) IndexOf(value interface{}) int {
+	current := l.head
+	for i := 0; current != nil; i++ {
+		if current.value == value {
+			return i
+		}
+		current = current.next
+	}
+	return -1
+}
+
 // String returns a string representation of the list.
 func (l *List) String() string {
 	var result string

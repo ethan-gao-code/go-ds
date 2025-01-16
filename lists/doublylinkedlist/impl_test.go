@@ -11,7 +11,7 @@ type Person struct {
 	Age  int
 }
 
-func TestAddFirst(t *testing.T) {
+func TestList_AddFirst(t *testing.T) {
 	// Test with integers
 	list := New()
 	list.AddFirst(1)
@@ -40,7 +40,7 @@ func TestAddFirst(t *testing.T) {
 	}
 }
 
-func TestAddLast(t *testing.T) {
+func TestList_AddLast(t *testing.T) {
 	// Test with integers
 	list := New()
 	list.AddLast(1)
@@ -69,7 +69,7 @@ func TestAddLast(t *testing.T) {
 	}
 }
 
-func TestPrepend(t *testing.T) {
+func TestList_Prepend(t *testing.T) {
 	// Test with integers
 	list := New()
 	list.Prepend(10)
@@ -98,7 +98,7 @@ func TestPrepend(t *testing.T) {
 	}
 }
 
-func TestAppend(t *testing.T) {
+func TestList_Append(t *testing.T) {
 	// Test with integers
 	list := New()
 	list.Append(100)
@@ -127,7 +127,7 @@ func TestAppend(t *testing.T) {
 	}
 }
 
-func TestRemoveFirst(t *testing.T) {
+func TestList_RemoveFirst(t *testing.T) {
 	// Test with integers
 	list := New()
 	list.Append(1)
@@ -153,7 +153,7 @@ func TestRemoveFirst(t *testing.T) {
 	}
 }
 
-func TestRemoveLast(t *testing.T) {
+func TestList_RemoveLast(t *testing.T) {
 	// Test with integers
 	list := New()
 	list.Append(1)
@@ -179,7 +179,7 @@ func TestRemoveLast(t *testing.T) {
 	}
 }
 
-func TestIterate(t *testing.T) {
+func TestList_Iterate(t *testing.T) {
 	// Test with integers
 	list := New()
 	list.Append(1)
@@ -206,7 +206,98 @@ func TestIterate(t *testing.T) {
 	}
 }
 
-func TestValues(t *testing.T) {
+func TestList_PeekFirst(t *testing.T) {
+	// Test with an empty list
+	list := &List{}
+	if result := list.PeekFirst(); result != nil {
+		t.Errorf("Expected nil for empty list, got %v", result)
+	}
+
+	// Test with a list containing elements
+	list.Append(10)
+	list.Append(20)
+	if result := list.PeekFirst(); result != 10 {
+		t.Errorf("Expected 10 for first element, got %v", result)
+	}
+}
+
+func TestList_PeekLast(t *testing.T) {
+	// Test with an empty list
+	list := &List{}
+	if result := list.PeekLast(); result != nil {
+		t.Errorf("Expected nil for empty list, got %v", result)
+	}
+
+	// Test with a list containing elements
+	list.Append(10)
+	list.Append(20)
+	if result := list.PeekLast(); result != 20 {
+		t.Errorf("Expected 20 for last element, got %v", result)
+	}
+}
+
+func TestList_GetByIndex(t *testing.T) {
+	// Test with an empty list
+	list := &List{}
+	if result := list.GetByIndex(0); result != nil {
+		t.Errorf("Expected nil for empty list, got %v", result)
+	}
+
+	// Test with a list containing elements
+	list.Append(10)
+	list.Append(20)
+	list.Append(30)
+
+	// Test valid indices
+	if result := list.GetByIndex(0); result != 10 {
+		t.Errorf("Expected 10 at index 0, got %v", result)
+	}
+	if result := list.GetByIndex(1); result != 20 {
+		t.Errorf("Expected 20 at index 1, got %v", result)
+	}
+	if result := list.GetByIndex(2); result != 30 {
+		t.Errorf("Expected 30 at index 2, got %v", result)
+	}
+
+	// Test is out of bounds indices
+	if result := list.GetByIndex(-1); result != nil {
+		t.Errorf("Expected nil for invalid index, got %v", result)
+	}
+	if result := list.GetByIndex(3); result != nil {
+		t.Errorf("Expected nil for invalid index, got %v", result)
+	}
+}
+
+func TestList_IndexOf(t *testing.T) {
+	// Test with an empty list
+	list := &List{}
+	if result := list.IndexOf(10); result != -1 {
+		t.Errorf("Expected -1 for non-existent element in empty list, got %v", result)
+	}
+
+	// Test with a list containing elements
+	list.Append(10)
+	list.Append(20)
+	list.Append(30)
+
+	// Test valid values
+	if result := list.IndexOf(10); result != 0 {
+		t.Errorf("Expected 0 for element 10, got %v", result)
+	}
+	if result := list.IndexOf(20); result != 1 {
+		t.Errorf("Expected 1 for element 20, got %v", result)
+	}
+	if result := list.IndexOf(30); result != 2 {
+		t.Errorf("Expected 2 for element 30, got %v", result)
+	}
+
+	// Test non-existent value
+	if result := list.IndexOf(40); result != -1 {
+		t.Errorf("Expected -1 for non-existent element, got %v", result)
+	}
+}
+
+func TestList_Values(t *testing.T) {
 	// Test with integers
 	list := New()
 	list.Append(10)

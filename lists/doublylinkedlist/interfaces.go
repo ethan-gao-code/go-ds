@@ -20,5 +20,16 @@ type DoublyLinkedList interface {
 	RemoveFirst() interface{} // Removes and returns the first element of the list.
 	RemoveLast() interface{}  // Removes and returns the last element of the list.
 
+	PeekFirst() interface{} // PeekFirst returns the first element of the list without removing it.
+	PeekLast() interface{}  // PeekLast returns the last element of the list without removing it.
+
+	// GetByIndex returns the element at the specified index.
+	// Returns nil if index is out of bounds.
+	GetByIndex(index int) interface{}
+
+	// IndexOf returns the index of the first occurrence of the given value.
+	// Returns -1 if the value is not found.
+	IndexOf(value interface{}) int
+
 	String() string // Returns a string representation of the list.
 }
