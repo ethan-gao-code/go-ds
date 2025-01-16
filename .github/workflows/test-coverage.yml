@@ -7,7 +7,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
     
     steps:
@@ -22,10 +22,10 @@ jobs:
       - name: Install dependencies
         run: go mod tidy
 
-      - name: Run tests and generate coverage
-        run: go test -coverprofile=coverage.out ./...
+      - name: Run Tests
+        run: make test
 
       - name: Codecov
-        uses: codecov/codecov-action@v5.1.2
+        uses: codecov/codecov-action@v5
         with:
-          files: coverage.out
+          flags: unittests
