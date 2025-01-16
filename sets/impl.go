@@ -9,9 +9,6 @@ import (
 	"strings"
 )
 
-// Ensure Set implements the SetInterface
-var _ Set = (*Sets)(nil)
-
 // New creates a new instance of Set
 func New(values ...interface{}) *Sets {
 	result := &Sets{items: make(map[interface{}]struct{})}
