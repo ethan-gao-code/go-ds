@@ -17,3 +17,17 @@ type List struct {
 	tail *Node // Tail of the list
 	size int   // Size of the list
 }
+
+// GenericNode defines the structure for a generic doubly linked list node.
+type GenericNode[T comparable] struct {
+	value T               // Value of the node
+	next  *GenericNode[T] // Pointer to the next node
+	prev  *GenericNode[T] // Pointer to the previous node
+}
+
+// GenericList is the generic implementation of the DoublyLinkedList interface.
+type GenericList[T comparable] struct {
+	head *GenericNode[T] // Head of the list
+	tail *GenericNode[T] // Tail of the list
+	size int             // Size of the list
+}

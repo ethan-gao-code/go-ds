@@ -6,7 +6,7 @@ package doublylinkedlist
 
 import "testing"
 
-type Person struct {
+type TestPerson struct {
 	Name string
 	Age  int
 }
@@ -33,9 +33,9 @@ func TestList_AddFirst(t *testing.T) {
 	}
 
 	// Test with structs
-	person := Person{Name: "John", Age: 30}
+	person := TestPerson{Name: "John", Age: 30}
 	list.AddFirst(person)
-	if list.Values()[0].(Person).Name != "John" {
+	if list.Values()[0].(TestPerson).Name != "John" {
 		t.Errorf("AddFirst failed with struct")
 	}
 }
@@ -62,9 +62,9 @@ func TestList_AddLast(t *testing.T) {
 	}
 
 	// Test with structs
-	person := Person{Name: "Jane", Age: 25}
+	person := TestPerson{Name: "Jane", Age: 25}
 	list.AddLast(person)
-	if list.Values()[4].(Person).Name != "Jane" {
+	if list.Values()[4].(TestPerson).Name != "Jane" {
 		t.Errorf("AddLast failed with struct")
 	}
 }
@@ -91,9 +91,9 @@ func TestList_Prepend(t *testing.T) {
 	}
 
 	// Test with structs
-	person := Person{Name: "Alice", Age: 28}
+	person := TestPerson{Name: "Alice", Age: 28}
 	list.Prepend(person)
-	if list.Values()[0].(Person).Name != "Alice" {
+	if list.Values()[0].(TestPerson).Name != "Alice" {
 		t.Errorf("Prepend failed with struct")
 	}
 }
@@ -120,9 +120,9 @@ func TestList_Append(t *testing.T) {
 	}
 
 	// Test with structs
-	person := Person{Name: "Bob", Age: 40}
+	person := TestPerson{Name: "Bob", Age: 40}
 	list.Append(person)
-	if list.Values()[4].(Person).Name != "Bob" {
+	if list.Values()[4].(TestPerson).Name != "Bob" {
 		t.Errorf("Append failed with struct")
 	}
 }
@@ -146,9 +146,9 @@ func TestList_RemoveFirst(t *testing.T) {
 	}
 
 	// Test with structs
-	list.AddFirst(Person{Name: "John", Age: 25})
+	list.AddFirst(TestPerson{Name: "John", Age: 25})
 	removedStruct := list.RemoveFirst()
-	if removedStruct.(Person).Name != "John" || list.Size() != 0 {
+	if removedStruct.(TestPerson).Name != "John" || list.Size() != 0 {
 		t.Errorf("RemoveFirst failed with struct. Expected {John, 25}, got %+v. List size: %d", removedStruct, list.Size())
 	}
 }
@@ -172,9 +172,9 @@ func TestList_RemoveLast(t *testing.T) {
 	}
 
 	// Test with structs
-	list.AddFirst(Person{Name: "John", Age: 25})
+	list.AddFirst(TestPerson{Name: "John", Age: 25})
 	removedStruct := list.RemoveLast()
-	if removedStruct.(Person).Name != "John" || list.Size() != 0 {
+	if removedStruct.(TestPerson).Name != "John" || list.Size() != 0 {
 		t.Errorf("RemoveLast failed with struct. Expected {John, 25}, got %+v. List size: %d", removedStruct, list.Size())
 	}
 }
@@ -199,9 +199,9 @@ func TestList_Iterate(t *testing.T) {
 	}
 
 	// Test with structs
-	list.Append(Person{Name: "Mike", Age: 35})
+	list.Append(TestPerson{Name: "Mike", Age: 35})
 	values = list.Iterate()
-	if len(values) != 6 || values[5].(Person).Name != "Mike" {
+	if len(values) != 6 || values[5].(TestPerson).Name != "Mike" {
 		t.Errorf("Iterate failed with structs")
 	}
 }
@@ -315,9 +315,43 @@ func TestList_Values(t *testing.T) {
 	}
 
 	// Test with structs
-	list.Append(Person{Name: "Tom", Age: 40})
+	list.Append(TestPerson{Name: "Tom", Age: 40})
 	values = list.Values()
-	if len(values) != 4 || values[3].(Person).Name != "Tom" {
+	if len(values) != 4 || values[3].(TestPerson).Name != "Tom" {
 		t.Errorf("Values failed with structs")
+	}
+}
+
+func TestList_String(t *testing.T) {
+	// Test with integers
+	list := New()
+	list.AddFirst(1)
+	list.AddLast(2)
+	list.AddLast(3)
+	result := list.String()
+	expected := "List elements: [1, 2, 3]"
+	if result != expected {
+		t.Errorf("Expected: %s, but got: %s", expected, result)
+	}
+
+	// Test with strings
+	list2 := New()
+	list2.AddFirst("A")
+	list2.AddLast("B")
+	list2.AddLast("C")
+	result = list2.String()
+	expected = "List elements: [A, B, C]"
+	if result != expected {
+		t.Errorf("Expected: %s, but got: %s", expected, result)
+	}
+
+	// Test with struct
+	list3 := New()
+	list3.AddFirst(TestPerson{"Alice", 25})
+	list3.AddLast(TestPerson{"Bob", 30})
+	result = list3.String()
+	expected = "List elements: [{Alice 25}, {Bob 30}]"
+	if result != expected {
+		t.Errorf("Expected: %s, but got: %s", expected, result)
 	}
 }

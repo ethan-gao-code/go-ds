@@ -9,24 +9,24 @@ import (
 	"strings"
 )
 
-// New creates a new doubly linked list.
-func New() *List {
-	return &List{}
+// NewGenericList creates a new generic doubly linked list.
+func NewGenericList[T comparable]() *GenericList[T] {
+	return &GenericList[T]{}
 }
 
 // IsEmpty checks if the list is empty.
-func (l *List) IsEmpty() bool {
+func (l *GenericList[T]) IsEmpty() bool {
 	return l.size == 0
 }
 
 // Size returns the number of elements in the list.
-func (l *List) Size() int {
+func (l *GenericList[T]) Size() int {
 	return l.size
 }
 
 // Iterate returns all elements in the list as a slice.
-func (l *List) Iterate() []interface{} {
-	var values []interface{}
+func (l *GenericList[T]) Iterate() []T {
+	var values []T
 	current := l.head
 	for current != nil {
 		values = append(values, current.value)
@@ -36,18 +36,18 @@ func (l *List) Iterate() []interface{} {
 }
 
 // Values is an alias for Iterate, returning all elements in the list as a slice.
-func (l *List) Values() []interface{} {
+func (l *GenericList[T]) Values() []T {
 	return l.Iterate()
 }
 
 // Add adds an element to the list (appends it at the end).
-func (l *List) Add(value interface{}) {
-	l.AddFirst(value)
+func (l *GenericList[T]) Add(value T) {
+	l.AddLast(value)
 }
 
 // AddFirst adds an element at the beginning of the list.
-func (l *List) AddFirst(value interface{}) {
-	node := &Node{value: value}
+func (l *GenericList[T]) AddFirst(value T) {
+	node := &GenericNode[T]{value: value}
 	if l.IsEmpty() {
 		l.head = node
 		l.tail = node
@@ -60,13 +60,13 @@ func (l *List) AddFirst(value interface{}) {
 }
 
 // Append adds an element at the end (alias for AddLast).
-func (l *List) Append(value interface{}) {
+func (l *GenericList[T]) Append(value T) {
 	l.AddLast(value)
 }
 
 // AddLast adds an element at the end of the list.
-func (l *List) AddLast(value interface{}) {
-	node := &Node{value: value}
+func (l *GenericList[T]) AddLast(value T) {
+	node := &GenericNode[T]{value: value}
 	if l.IsEmpty() {
 		l.head = node
 		l.tail = node
@@ -79,14 +79,15 @@ func (l *List) AddLast(value interface{}) {
 }
 
 // Prepend adds an element at the beginning (alias for AddFirst).
-func (l *List) Prepend(value interface{}) {
+func (l *GenericList[T]) Prepend(value T) {
 	l.AddFirst(value)
 }
 
 // RemoveFirst removes and returns the first element of the list.
-func (l *List) RemoveFirst() interface{} {
+func (l *GenericList[T]) RemoveFirst() T {
 	if l.IsEmpty() {
-		return nil
+		var zeroValue T
+		return zeroValue
 	}
 
 	removedNode := l.head
@@ -103,9 +104,10 @@ func (l *List) RemoveFirst() interface{} {
 }
 
 // RemoveLast removes and returns the last element of the list.
-func (l *List) RemoveLast() interface{} {
+func (l *GenericList[T]) RemoveLast() T {
 	if l.IsEmpty() {
-		return nil
+		var zeroValue T
+		return zeroValue
 	}
 
 	removedNode := l.tail
@@ -122,38 +124,37 @@ func (l *List) RemoveLast() interface{} {
 }
 
 // PeekFirst returns the first element of the doubly linked list without removing it.
-func (l *List) PeekFirst() interface{} {
+func (l *GenericList[T]) PeekFirst() T {
 	if l.head == nil {
-		return nil // Return nil if the list is empty
+		var zeroValue T
+		return zeroValue
 	}
 	return l.head.value
 }
 
 // PeekLast returns the last element of the doubly linked list without removing it.
-func (l *List) PeekLast() interface{} {
+func (l *GenericList[T]) PeekLast() T {
 	if l.tail == nil {
-		return nil // Return nil if the list is empty
+		var zeroValue T
+		return zeroValue
 	}
 	return l.tail.value
 }
 
 // GetByIndex returns the element at the specified index.
-func (l *List) GetByIndex(index int) interface{} {
-	// If the index is out of bounds
+func (l *GenericList[T]) GetByIndex(index int) T {
 	if index < 0 || index >= l.size {
-		return nil
+		var zeroValue T
+		return zeroValue
 	}
 
-	// Start from the head or tail depending on the index location to optimize search
 	if index < l.size/2 {
-		// Traverse from the head
 		current := l.head
 		for i := 0; i < index; i++ {
 			current = current.next
 		}
 		return current.value
 	} else {
-		// Traverse from the tail
 		current := l.tail
 		for i := l.size - 1; i > index; i-- {
 			current = current.prev
@@ -164,7 +165,7 @@ func (l *List) GetByIndex(index int) interface{} {
 
 // IndexOf returns the index of the first occurrence of the given value.
 // Returns -1 if the value is not found.
-func (l *List) IndexOf(value interface{}) int {
+func (l *GenericList[T]) IndexOf(value T) int {
 	current := l.head
 	for i := 0; current != nil; i++ {
 		if current.value == value {
@@ -176,7 +177,7 @@ func (l *List) IndexOf(value interface{}) int {
 }
 
 // String returns a string representation of the list.
-func (l *List) String() string {
+func (l *GenericList[T]) String() string {
 	// Create a slice to hold string representations of the elements
 	elements := make([]string, l.size)
 
