@@ -40,9 +40,14 @@ func TestCompareObjects(t *testing.T) {
 		{5, 2, 1},  // 5 > 2
 		{2, 5, -1}, // 2 < 5
 
-		// Default comparison for mixed types (using string format)
-		{10, "10", 0}, // 10 == "10" when converted to string
-		{true, 1, 0},  // true == 1 when converted to string
+		// Mixed types
+		{10, "10", 0},  // 10 == "10"
+		{true, 1, 0},   // true == 1
+		{true, -1, 1},  // true > -1
+		{false, 1, -1}, // false < 1
+		{1, true, 0},   // 1 == true
+		{-1, true, -1}, // -1 < true
+		{1, false, 1},  // 1 > false
 	}
 
 	for _, test := range tests {
