@@ -257,6 +257,12 @@ func (sl *List) Find(score float64, obj interface{}) *Node {
 	return nil
 }
 
+// Contains checks whether an element with the given score and object exists in the skip list
+// It returns true if the element is found, and false otherwise
+func (sl *List) Contains(score float64, obj interface{}) bool {
+	return sl.Find(score, obj) != nil
+}
+
 // Rank calculates the rank of the given score and object in the skip list
 // It returns the rank (index) of the element if found, otherwise -1
 func (sl *List) Rank(score float64, obj interface{}) int {

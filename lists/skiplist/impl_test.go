@@ -144,6 +144,36 @@ func TestList_Find(t *testing.T) {
 	}
 }
 
+func TestList_Contains(t *testing.T) {
+	// Initialize a new SkipList
+	skipList := New()
+
+	// Add elements to the skip list
+	skipList.Add(1.0, "a")
+	skipList.Add(2.0, "b")
+	skipList.Add(3.0, "c")
+
+	// Test case 1: Check if an existing element is found
+	if !skipList.Contains(1.0, "a") {
+		t.Errorf("Expected skip list to contain score: 1.0 and obj: 'a'")
+	}
+
+	// Test case 2: Check if a non-existing element is not found
+	if skipList.Contains(4.0, "d") {
+		t.Errorf("Expected skip list to NOT contain score: 4.0 and obj: 'd'")
+	}
+
+	// Test case 3: Check if an element with the same score but different object is not found
+	if skipList.Contains(2.0, "c") {
+		t.Errorf("Expected skip list to NOT contain score: 2.0 and obj: 'c'")
+	}
+
+	// Test case 4: Check if an element with the same object but different score is not found
+	if skipList.Contains(3.0, "a") {
+		t.Errorf("Expected skip list to NOT contain score: 3.0 and obj: 'a'")
+	}
+}
+
 func TestList_Rank(t *testing.T) {
 	// Create a new skip list
 	skipList := New()
