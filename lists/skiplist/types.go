@@ -29,3 +29,11 @@ type nodeLevel struct {
 	forward *Node // Pointer to the next node at this nodeLevel
 	span    int   // Span represents the number of nodes between this and the next node at this nodeLevel
 }
+
+func (n *Node) GetScore() float64 {
+	return n.score
+}
+
+func (n *Node) GetObj() interface{} {
+	return n.obj
+}

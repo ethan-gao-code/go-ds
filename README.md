@@ -29,6 +29,8 @@ Below are examples of how to use the various data structures in this library. Yo
 
 ### Doubly Linked List (WIP)
 
+### Skip List (WIP)
+
 ### Queue (WIP)
 
 ### Sets (WIP)

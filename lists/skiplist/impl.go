@@ -78,22 +78,22 @@ func randomLevel() int {
 }
 
 // Add adds a new element to the skip list
-func (zsl *List) Add(score float64, obj interface{}) *Node {
+func (sl *List) Add(score float64, obj interface{}) *Node {
 	// Check if score is valid (not NaN)
 	if math.IsNaN(score) {
 		return nil
 	}
 
 	// Create an array to store the update nodes at each level
-	update := make([]*Node, zsl.level)
+	update := make([]*Node, sl.level)
 	// Create an array to store the rank for each level
-	rank := make([]int, zsl.level)
+	rank := make([]int, sl.level)
 
 	// Start from the highest level and move down
-	current := zsl.header
-	for i := zsl.level - 1; i >= 0; i-- {
+	current := sl.header
+	for i := sl.level - 1; i >= 0; i-- {
 		// Set the rank for this level
-		if i == zsl.level-1 {
+		if i == sl.level-1 {
 			rank[i] = 0
 		} else {
 			rank[i] = rank[i+1]
@@ -116,16 +116,16 @@ func (zsl *List) Add(score float64, obj interface{}) *Node {
 	level := randomLevel()
 
 	// If the new level is higher than the current maximum level, update the skip list
-	if level > zsl.level {
+	if level > sl.level {
 		// Update the level and initialize the new levels
-		for i := zsl.level; i < level; i++ {
-			update = append(update, zsl.header)
+		for i := sl.level; i < level; i++ {
+			update = append(update, sl.header)
 			rank = append(rank, 0)
 			update[i].level = append(update[i].level, &nodeLevel{}) // Expanding level array for the new level
-			update[i].level[i].span = int(zsl.length)
+			update[i].level[i].span = int(sl.length)
 		}
 		// Update the current maximum level of the skip list
-		zsl.level = level
+		sl.level = level
 	}
 
 	// Create the new node
@@ -144,7 +144,7 @@ func (zsl *List) Add(score float64, obj interface{}) *Node {
 	}
 
 	// Increment span for untouched levels
-	for i := level; i < zsl.level; i++ {
+	for i := level; i < sl.level; i++ {
 		update[i].level[i].span++
 	}
 
@@ -154,22 +154,22 @@ func (zsl *List) Add(score float64, obj interface{}) *Node {
 		newListNode.level[0].forward.backward = newListNode
 	} else {
 		// If it's the last node, set it as the tail
-		zsl.tail = newListNode
+		sl.tail = newListNode
 	}
 
 	// Update the length of the skip list
-	zsl.length++
+	sl.length++
 
 	return newListNode
 }
 
 // Remove removes an element by score and value.
-func (zsl *List) Remove(score float64, obj interface{}) bool {
-	update := make([]*Node, zsl.level)
-	current := zsl.header
+func (sl *List) Remove(score float64, obj interface{}) bool {
+	update := make([]*Node, sl.level)
+	current := sl.header
 
 	// Traverse the list from top level to find the node to remove
-	for i := zsl.level - 1; i >= 0; i-- {
+	for i := sl.level - 1; i >= 0; i-- {
 		// Find the largest node whose score is smaller than the node to be removed
 		// or if score is equal, compare lexicographically
 		for current.level[i].forward != nil &&
@@ -186,8 +186,8 @@ func (zsl *List) Remove(score float64, obj interface{}) bool {
 	// If the node to remove is found and matches both score and object
 	if current != nil && score == current.score && utils.EqualObjects(current.obj, obj) {
 		// Remove the node and update all affected levels
-		zsl.removeNode(current, update)
-		zsl.freeNode(current)
+		sl.removeNode(current, update)
+		sl.freeNode(current)
 		return true
 	}
 
@@ -195,9 +195,9 @@ func (zsl *List) Remove(score float64, obj interface{}) bool {
 	return false
 }
 
-func (zsl *List) removeNode(current *Node, update []*Node) {
+func (sl *List) removeNode(current *Node, update []*Node) {
 	// Traverse from the highest level to the lowest level
-	for i := 0; i < zsl.level; i++ {
+	for i := 0; i < sl.level; i++ {
 		// If the forward pointer of update[i] points to current, update it to skip current
 		if update[i].level[i].forward == current {
 			// Update the span and forward pointer
@@ -214,19 +214,19 @@ func (zsl *List) removeNode(current *Node, update []*Node) {
 		current.level[0].forward.backward = current.backward
 	} else {
 		// If current is the tail node, update the tail pointer
-		zsl.tail = current.backward
+		sl.tail = current.backward
 	}
 
 	// Remove the highest level if it's now empty
-	for zsl.level > 1 && zsl.header.level[zsl.level-1].forward == nil {
-		zsl.level--
+	for sl.level > 1 && sl.header.level[sl.level-1].forward == nil {
+		sl.level--
 	}
 
 	// Decrease the length of the skip list
-	zsl.length--
+	sl.length--
 }
 
-func (zsl *List) freeNode(current *Node) {
+func (sl *List) freeNode(current *Node) {
 	// Here you can handle the freeing of resources for the node
 	// Depending on your implementation, you might want to free the node's memory or handle it differently
 	// In Go, garbage collection will automatically clean up the memory, so I just leave a blank function here
@@ -234,11 +234,11 @@ func (zsl *List) freeNode(current *Node) {
 
 // Find finds an element by score and value
 // Return nil if not found
-func (zsl *List) Find(score float64, obj interface{}) *Node {
-	current := zsl.header
+func (sl *List) Find(score float64, obj interface{}) *Node {
+	current := sl.header
 
 	// Iterate from the top level downwards
-	for i := zsl.level - 1; i >= 0; i-- {
+	for i := sl.level - 1; i >= 0; i-- {
 		// Traverse the list at this level
 		for current.level[i].forward != nil &&
 			(current.level[i].forward.score < score ||
@@ -259,12 +259,12 @@ func (zsl *List) Find(score float64, obj interface{}) *Node {
 
 // Rank calculates the rank of the given score and object in the skip list
 // It returns the rank (index) of the element if found, otherwise -1
-func (zsl *List) Rank(score float64, obj interface{}) int {
+func (sl *List) Rank(score float64, obj interface{}) int {
 	var rank int
-	x := zsl.header
+	x := sl.header
 
 	// Start from the top-most level and move down
-	for i := zsl.level - 1; i >= 0; i-- {
+	for i := sl.level - 1; i >= 0; i-- {
 		// Traverse forward as long as the score is less than the target score
 		// or the score is equal but the object is lexicographically smaller
 		for x.level[i].forward != nil &&
@@ -287,16 +287,16 @@ func (zsl *List) Rank(score float64, obj interface{}) int {
 }
 
 // GetByRank retrieves an element by its rank (1-based index).
-func (zsl *List) GetByRank(rank int) *Node {
-	if rank < 1 || rank > int(zsl.length) {
+func (sl *List) GetByRank(rank int) *Node {
+	if rank < 1 || rank > int(sl.length) {
 		return nil // If the rank is out of bounds, return nil
 	}
 
-	current := zsl.header
+	current := sl.header
 	cumulativeRank := 0
 
 	// Traverse from top to bottom layers
-	for i := zsl.level - 1; i >= 0; i-- {
+	for i := sl.level - 1; i >= 0; i-- {
 		// Traverse through the level[i] linked list
 		for current.level[i].forward != nil && cumulativeRank+current.level[i].span < rank {
 			cumulativeRank += current.level[i].span
@@ -314,21 +314,21 @@ func (zsl *List) GetByRank(rank int) *Node {
 }
 
 // Size returns the number of elements in the skip list.
-func (zsl *List) Size() int {
-	return int(zsl.length)
+func (sl *List) Size() int {
+	return int(sl.length)
 }
 
 // IsEmpty returns true if the skip list is empty, otherwise false.
-func (zsl *List) IsEmpty() bool {
-	return zsl.length == 0
+func (sl *List) IsEmpty() bool {
+	return sl.length == 0
 }
 
 // String returns a string representation of the skip list.
-func (zsl *List) String() string {
+func (sl *List) String() string {
 	// Create a slice to hold string representations of the elements
 	var elements []string
 	// Iterate through the list starting from the lowest level (level 0)
-	currentNode := zsl.header.level[0].forward
+	currentNode := sl.header.level[0].forward
 	for currentNode != nil {
 		// Append the string representation of the node to the elements slice
 		elements = append(elements, fmt.Sprintf("score: %.2f, obj: %s", currentNode.score, currentNode.obj))
