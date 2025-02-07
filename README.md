@@ -41,4 +41,4 @@ We encourage you to use `go-ds` in your projects and share your feedback with us
 We also welcome contributions! If you'd like to contribute to the development of `go-ds`, please fork the repository and submit a pull request. Be sure to follow the coding standards and include tests where applicable.
 
 ## License
-`go-ds` is open source and available under the MIT License. See the [LICENSE](#https://github.com/ethan-gao-code/go-ds/blob/main/LICENSE) file for more information.
+`go-ds` is open source and available under the MIT License. See the [LICENSE](https://github.com/ethan-gao-code/go-ds/blob/main/LICENSE) file for more information.
