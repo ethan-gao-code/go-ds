@@ -308,6 +308,10 @@ func TestTree_Traversals(t *testing.T) {
 func TestTree_String(t *testing.T) {
 	tree := New[int, string]()
 
+	if got := tree.String(); got != "" {
+		t.Errorf("expected String output:\n%s\nbut got:\n%s", "", got)
+	}
+
 	// Insert elements
 	tree.Put(10, "a")
 	tree.Put(5, "b")
