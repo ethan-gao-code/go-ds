@@ -1,2 +1,5 @@
 ignore:
   - "examples" # ignore examples folder
+coverage:
+  status:
+    project: 95.00%
