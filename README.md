@@ -37,6 +37,8 @@ Below are examples of how to use the various data structures in this library. Yo
 
 ### Stack (WIP)
 
+### AVL Tree (WIP)
+
 ## Contributing
 We encourage you to use `go-ds` in your projects and share your feedback with us. Your input will help guide future improvements and feature additions to the library.
 
