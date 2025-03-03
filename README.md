@@ -25,7 +25,33 @@ go get github.com/ethan-gao-code/go-ds
 ## Usage
 Below are examples of how to use the various data structures in this library. You can find more detailed examples in the [examples folder](https://github.com/ethan-gao-code/go-ds/tree/main/examples).
 
-### Bloom Filters (WIP)
+### Bloom Filters
+A Bloom filter is a space-efficient probabilistic data structure, that is used to test whether an element is a member of a set.
+
+For more details and usages about Bloom Filters, you can read [Bloom Filter README](https://github.com/ethan-gao-code/go-ds/bloomfilters/README.md)
+```go
+package main
+
+import (
+	"fmt"
+
+	"github.com/ethan-gao-code/go-ds/bloomfilters"
+)
+
+func main() {
+	bf := bloomfilters.New(0.01, 1000) // Create a new BloomFilter with a desired false positive rate of 0.01 and expected 1000 items
+	
+	bf.Add("apple") // Use Add to add element into the Bloom Filter
+	
+	bf.Contains("apple") // Contains can check if some elements are in the Bloom Filter. It returns true or false
+	
+	bf.Size() // Size return the size of the Bloom Filter (number of bits set to 1)
+
+	bf.HashCount() // HashCount gets the number of hash functions used by the Bloom Filter
+
+	bf.Reset() // Reset the Bloom Filter
+}
+```
 
 ### Doubly Linked List (WIP)
 
