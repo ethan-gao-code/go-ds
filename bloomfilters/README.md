@@ -14,6 +14,44 @@ Here is an example about creating a new bloom filter with a desired false positi
 bf := bloomfilters.New(0.01, 1000)
 ```
 
+Then you can use `Add` function to add some elements to the Bloom Filter
+
+```go
+bf.Add("apple")
+bf.Add("banana")
+bf.Add("cherry")
+```
+
+`Contains` can check if an item might exist in the Bloom Filter.
+
+```go
+bf.Contains("apple")
+```
+
+`Size` returns the number of bits set to 1 in the bitmap.
+
+```go
+bf.Size()
+```
+
+`HashCount` HashCount returns the number of hash functions used by the Bloom Filter.
+
+```go
+bf.HashCount()
+```
+
+`Values` returns the indices of all bits set in the bitmap (for debugging or analysis purposes).
+
+```go
+bf.Values()
+```
+
+`Reset` can clear all bits in the Bloom Filter bitmap.
+
+```go
+bf.Reset()
+```
+
 ## Reference
 
 Wiki: https://en.wikipedia.org/wiki/Bloom_filter
